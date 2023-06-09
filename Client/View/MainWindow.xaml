@@ -43,12 +43,12 @@
         </Grid>
 
         <!-- btn-->
-        <Button Grid.Row="3" Name="AddProduct" FontSize="15" Content="Add product" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
+        <Button Grid.Row="3" Name="AddProduct" Command="{Binding OpenAddProductViewCommand}" FontSize="15" Content="Add product" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0" Click="AddProduct_Click">
             <Button.Background>
                 <SolidColorBrush Color="#FF1A1A1E" Opacity="0"/>
             </Button.Background>
         </Button>
-        <Button Grid.Row="4" Name="RemoveProduct" FontSize="15" Content="Remove product" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
+        <Button Grid.Row="4" Name="RemoveProduct" Command="{Binding CloseViewCommand}" FontSize="15" Content="Remove product" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
             <Button.Background>
                 <SolidColorBrush Color="#FF1A1A1E" Opacity="0"/>
             </Button.Background>
@@ -69,20 +69,20 @@
 
 
         <!-- btn-->
-        <Button Grid.Row="6" Name="MakeOrder" FontSize="15" Content="Make order" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
+        <Button Grid.Row="6" Name="MakeOrder" FontSize="15" Content="Make order" Command="{Binding MakeOdrerCommand}"  Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
             <Button.Background>
                 <SolidColorBrush Color="#FF1A1A1E" Opacity="0"/>
             </Button.Background>
         </Button>
 
-        <Button Grid.Row="7" Name="SendOrder" FontSize="15" Content="Send order" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
+        <Button Grid.Row="7" Name="SendOrder" FontSize="15" Content="Send order" Command="{Binding SendOrderCommand}"  Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
             <Button.Background>
                 <SolidColorBrush Color="#FF1A1A1E" Opacity="0"/>
             </Button.Background>
         </Button>
 
         <!--Exit-->
-        <Button Grid.Row="10" Name="Exit" FontSize="15" Content="Exit" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
+        <Button Grid.Row="10" Name="Exit" FontSize="15" Content="Exit" Command="{Binding CloseViewCommand}" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
             <Button.Background>
                 <SolidColorBrush Color="#FF1A1A1E" Opacity="0"/>
             </Button.Background>
@@ -96,13 +96,10 @@
                 <SolidColorBrush Color="#FF131111" Opacity="0.5"/>
             </Grid.Background>
         </Grid>
-        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="5"  d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FF272222"/>
-        <DataGrid Grid.Column="2" Grid.Row="1" Grid.RowSpan="10" ItemsSource="{Binding DataItems}" AutoGenerateColumns="True" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FF272222"/>
-
         <!-- Messages list-->
-
-
+        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="5"  d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FF272222"/>
         <!-- DataGrid-->
+        <DataGrid Grid.Column="2" Grid.Row="1" Grid.RowSpan="10" ItemsSource="{Binding DataItems}" AutoGenerateColumns="True" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FF272222"/>
 
     </Grid>
 </Window>
