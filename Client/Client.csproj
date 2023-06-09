@@ -7,4 +7,19 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\RabbitLib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Product&amp;OrderLibrary">
+      <HintPath>..\ProductAndOrderLib\Product&amp;OrderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="QueueRabbitMQ">
+      <HintPath>..\RabbitLib\QueueRabbitMQ.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\RabbitLib\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
