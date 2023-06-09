@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,18 @@ namespace Client
         public MainWindow()
         {
             InitializeComponent();
+
+            Product_OrderLibrary.DataDB.Product product = new Product_OrderLibrary.DataDB.Product
+            {
+                Name = "aaaaaaa",
+                Prcie = 10,
+                Quantity = 1
+            };
+            using (ContextClient context = new ContextClient())
+            {
+                context.Products.Add(product);
+                context.SaveChanges();
+            }
 
             
         }
