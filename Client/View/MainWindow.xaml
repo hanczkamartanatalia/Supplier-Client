@@ -7,19 +7,11 @@
         mc:Ignorable="d"
         Title="Client" Width="1920" WindowState="Maximized" WindowStyle="None">
 
-    <Grid Height="1064" VerticalAlignment="Bottom">
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF2E2830" Offset="0.425"/>
-                <GradientStop Color="#FF0E0E0E" Offset="1"/>
-                <GradientStop Color="#FF28232A" Offset="0.517"/>
-                <GradientStop Color="#FF262228" Offset="0.363"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+    <Grid Height="1064" VerticalAlignment="Bottom" Background="#FF272222">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.2*" Name="ColumnMenu" />
-            <ColumnDefinition Width="2.5*" Name="ColumnMessage"/>
-            <ColumnDefinition Width="10*" Name="ColumnDataGrid"/>
+            <ColumnDefinition Width="168.175" Name="ColumnMenu" />
+            <ColumnDefinition Width="350*" Name="ColumnMessage"/>
+            <ColumnDefinition Width="1401*" Name="ColumnDataGrid"/>
 
 
         </Grid.ColumnDefinitions>
@@ -104,12 +96,13 @@
                 <SolidColorBrush Color="#FF131111" Opacity="0.5"/>
             </Grid.Background>
         </Grid>
+        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="5"  d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FF272222"/>
+        <DataGrid Grid.Column="2" Grid.Row="1" Grid.RowSpan="10" ItemsSource="{Binding DataItems}" AutoGenerateColumns="True" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FF272222"/>
 
         <!-- Messages list-->
-        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="7"  d:ItemsSource="{d:SampleData ItemCount=5}" Foreground="#FFCAC2C2" FontSize="20" Margin="7,7,0,0" BorderThickness="0,0,0,0" Background="{x:Null}" SelectionChanged="ListBox_SelectionChanged"/>
+
 
         <!-- DataGrid-->
-        <DataGrid Grid.Row="1" Grid.Column="2" Grid.RowSpan="11" SelectionChanged="DataGrid_SelectionChanged"/>
 
     </Grid>
 </Window>
