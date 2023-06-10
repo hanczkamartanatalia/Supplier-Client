@@ -14,7 +14,7 @@ namespace Client.Model
         public void Add<T>(T obj)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
-            if (typeof(T) != typeof(Product_OrderLibrary.DataDB.Product)) throw new Exception("Invaild type. It should by 'Product'");
+            if (typeof(T) != typeof(Product)) throw new Exception("Invaild type. It should by 'Product'");
 
             using (Data.ContextClient _context = new Data.ContextClient())
             {

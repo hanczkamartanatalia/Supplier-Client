@@ -23,7 +23,7 @@ namespace Client.View
         public AddMessageView()
         {
             InitializeComponent();
-            new AddMessageViewModel();
+            DataContext = new AddMessageViewModel();
         }
     }
 }

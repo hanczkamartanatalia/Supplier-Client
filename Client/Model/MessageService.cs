@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Product_OrderLibrary.DataDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,15 @@ namespace Client.Model
     {
         public void Add<T>(T obj)
         {
-            throw new NotImplementedException();
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+            if (typeof(T) != typeof(Message)) throw new Exception("Invaild type. It should by 'Message'");
+
+            using (Data.ContextClient _context = new Data.ContextClient())
+            {
+                
+                _context.Add(obj);
+                _context.SaveChanges();
+            }
         }
 
         public T FindById<T>(int id)

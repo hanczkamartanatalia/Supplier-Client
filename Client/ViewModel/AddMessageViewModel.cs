@@ -1,14 +1,20 @@
 ﻿using Client.Commands;
+using Client.Model;
+using Client.Model.Rabbit;
+using Product_OrderLibrary.DataDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Client.ViewModel
 {
     internal class AddMessageViewModel : BaseViewModel
     {
+
         internal AddMessageViewModel() 
         {
             SendMessageCommand = new RelayCommand(SendMessage);
@@ -16,13 +22,32 @@ namespace Client.ViewModel
 
         private void SendMessage(object obj)
         {
+            try
+            {
+                DateTime date = DateTime.Now;
+                Message message = new Message(TextBoxText, date);
+
+                MessageService service = new MessageService();
+                service.Add(message);
+
+                ConnectToSend connect = new ConnectToSend();
+                connect.Send(null, message);
+
+                var window = obj as Window;
+                window.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             
         }
 
 
         #region ICommand
-        public RelayCommand SendMessageCommand { get; }
+        public ICommand SendMessageCommand { get; set; }
         #endregion
+
 
         #region TextBox Service
 

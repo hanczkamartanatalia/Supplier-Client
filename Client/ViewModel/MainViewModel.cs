@@ -19,6 +19,8 @@ using System.Security.Policy;
 using System.Reflection.Metadata;
 using System.Windows;
 using Client.Model;
+using QueueRabbitMQ.MessageService;
+using Client.Model.Rabbit;
 
 namespace Client.ViewModel
 {
@@ -86,10 +88,47 @@ namespace Client.ViewModel
         #endregion
 
 
+        #region MessagesList
+
+        private ObservableCollection<Message> _messagesList;
+        public ObservableCollection<Message> MessagesList
+        {
+            get { return _messagesList; }
+            set
+            {
+                _messagesList = value;
+                OnPropertyChanged(nameof(MessagesList));
+            }
+        }
+
+        private async Task LoadMessagesAsync()
+        {
+            await Task.Run(() =>
+            {
+                ObservableCollection<Message> messageItem= new ObservableCollection<Message>();
+
+                ConnectToReceive connectToReceive = new ConnectToReceive();
+                List<Message> MessagesLis = connectToReceive.Receive<Message>();
+
+                foreach (Message message in MessagesLis)
+                {
+                    messageItem.Add(message);
+                }
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MessagesList = messageItem;
+                });
+            });
+        }
+
+
+        #endregion
+
         #region DataGrid
 
-        private ObservableCollection<Product_OrderLibrary.DataDB.Product> _dataItems;
-        public ObservableCollection<Product_OrderLibrary.DataDB.Product> DataItems
+        private ObservableCollection<Product> _dataItems;
+        public ObservableCollection<Product> DataItems
         {
             get { return _dataItems; }
             set

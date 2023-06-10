@@ -1,5 +1,6 @@
 ﻿using Client.Commands;
 using Client.Model;
+using Product_OrderLibrary.DataDB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +18,6 @@ namespace Client.ViewModel
         internal AddProductViewModel() 
         {
             AcceptFormsCommand = new RelayCommand(AcceptForms);
-
         }
 
         #region buttons
@@ -25,7 +25,7 @@ namespace Client.ViewModel
         {
             try
             {
-                Product_OrderLibrary.DataDB.Product product = new Product_OrderLibrary.DataDB.Product(TextBoxName, TextBoxQuantity, TextBoxPrice);
+                Product product = new Product(TextBoxName, TextBoxQuantity, TextBoxPrice);
 
                 ProductService service = new ProductService();
                 service.Add(product);
@@ -36,7 +36,7 @@ namespace Client.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+
             }
 
         }
