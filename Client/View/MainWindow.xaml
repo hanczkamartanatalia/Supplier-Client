@@ -97,9 +97,9 @@
             </Grid.Background>
         </Grid>
         <!-- Messages list-->
-        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="5"  d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FF272222"/>
+        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="5" Background="#FF272222"/>
         <!-- DataGrid-->
-        <DataGrid Grid.Column="2" Grid.Row="1" Grid.RowSpan="10" ItemsSource="{Binding DataItems}" AutoGenerateColumns="True" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FF272222"/>
+        <DataGrid Grid.Column="2" Grid.Row="1" Grid.RowSpan="10" ItemsSource="{Binding DataItems}" AutoGenerateColumns="True"  Background="#FF272222"/>
 
     </Grid>
 </Window>

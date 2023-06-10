@@ -21,27 +21,29 @@ using System.Windows;
 
 namespace Client.ViewModel
 {
-    internal class MainViewModel : INotifyPropertyChanged
+    internal class MainViewModel : BaseViewModel
     {
-        private ObservableCollection<Product_OrderLibrary.DataDB.Product> _dataItems;
-
-        public ObservableCollection<Product_OrderLibrary.DataDB.Product> DataItems
-        {
-            get { return _dataItems; }
-            set
-            {
-                _dataItems = value;
-                OnPropertyChanged(nameof(DataItems));
-            }
-        }
-
         internal MainViewModel() 
         {
-            LoadData();
+            LoadDataAsync();
+
             OpenAddProductViewCommand = new RelayCommand(OpenAddProductView);
             CloseViewCommand = new RelayCommand(CloseView);
             SendOrderCommand = new RelayCommand(SendOrder);
             MakeOdrerCommand = new RelayCommand(MakeOdrer);
+        }
+
+        #region Buttons
+
+        private void OpenAddProductView(object obj)
+        {
+            AddProductView view = new AddProductView();
+            AddProductViewModel addProductViewModel = new AddProductViewModel();
+
+            addProductViewModel.ProductAdded += AddProductViewModel_ProductAdded;
+            view.DataContext = addProductViewModel;
+
+            view.ShowDialog();
 
         }
 
@@ -61,41 +63,63 @@ namespace Client.ViewModel
             window.Close();
         }
 
-        private void OpenAddProductView(object obj)
-        {
-            AddProductView view = new AddProductView();
-            view.ShowDialog();
-        }
+        #endregion
+
+
+        #region ICommand
 
         public ICommand CloseViewCommand { get; private set; }
+        public ICommand SendOrderCommand { get; }
+        public ICommand MakeOdrerCommand { get; }
+        public ICommand OpenAddProductViewCommand{get; set;}
 
-        public RelayCommand SendOrderCommand { get; }
-        public RelayCommand MakeOdrerCommand { get; }
-        public ICommand OpenAddProductViewCommand
+        #endregion
+
+
+        #region DataGrid
+
+        private ObservableCollection<Product_OrderLibrary.DataDB.Product> _dataItems;
+        public ObservableCollection<Product_OrderLibrary.DataDB.Product> DataItems
         {
-            get; set;
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void LoadData()
-        {
-            _dataItems = new ObservableCollection<Product_OrderLibrary.DataDB.Product>();
-
-            ContextClient context = new ContextClient();
-            List<Product_OrderLibrary.DataDB.Product> products = Product_OrderLibrary.Service.ContextService.Products(() => context, "Products");
-            foreach (var product in products)
+            get { return _dataItems; }
+            set
             {
-                DataItems.Add(product);
+                _dataItems = value;
+                OnPropertyChanged(nameof(DataItems));
             }
-
-            OnPropertyChanged();
         }
 
+        private async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                ObservableCollection<Product_OrderLibrary.DataDB.Product> dataItems = new ObservableCollection<Product_OrderLibrary.DataDB.Product>();
+
+                ContextClient context = new ContextClient();
+
+                List<Product_OrderLibrary.DataDB.Product> products = Product_OrderLibrary.Service.ContextService.Products(() => context, "Products");
+                foreach (var product in products)
+                {
+                    dataItems.Add(product);
+                }
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    DataItems = dataItems;
+                });
+            });
+        }
+
+        #endregion
+
+
+        #region EventsHandler
+
+        private void AddProductViewModel_ProductAdded(object sender, EventArgs e) 
+        {
+            LoadDataAsync();
+        }
+
+        #endregion
     }
 }

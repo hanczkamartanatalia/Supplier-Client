@@ -25,12 +25,12 @@
         <Label Content="Name" Margin="15" Grid.Row="1" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FFDCD7D7"/>
         <Label Content="Price" Margin="15" Grid.Row="2" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FFDCD7D7" />
         <Label Content="Quantity" Margin="15" Grid.Row="3" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FFDCD7D7"/>
-        
-        <Button Content="Accept" Grid.Row="4" Grid.ColumnSpan="2" FontSize="25"/>
 
-        <TextBox Name="nameTB" Grid.Row="1" Grid.Column="1"/>
-        <TextBox Name="priceTB" Grid.Row="2" Grid.Column="1"/>
-        <TextBox Name="quantityTB" Grid.Row="3" Grid.Column="1"/>
+        <Button Content="Accept" Command="{Binding AcceptFormsCommand}" Grid.Row="4" Grid.ColumnSpan="2" FontSize="25" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+
+        <TextBox Name="nameTB" Grid.Row="1" Grid.Column="1" Text="{Binding TextBoxName, Mode=TwoWay}" FontSize="15"/>
+        <TextBox Name="priceTB" Grid.Row="2" Grid.Column="1" Text="{Binding TextBoxPrice, Mode=TwoWay}" FontSize="15"/>
+        <TextBox Name="quantityTB" Grid.Row="3" Grid.Column="1" Text="{Binding TextBoxQuantity, Mode=TwoWay}" FontSize="15"/>
         
     </Grid>
 </Window>
