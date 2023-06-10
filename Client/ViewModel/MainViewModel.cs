@@ -32,18 +32,26 @@ namespace Client.ViewModel
             CloseViewCommand = new RelayCommand(CloseView);
             SendOrderCommand = new RelayCommand(SendOrder);
             MakeOdrerCommand = new RelayCommand(MakeOdrer);
+            AddMessageCommand = new RelayCommand(AddMessage);
         }
 
         #region Buttons
 
+        private void AddMessage(object obj)
+        {
+            AddMessageView view = new AddMessageView();
+            view.ShowDialog();
+        }
+
+
         private void OpenAddProductView(object obj)
         {
             AddProductView view = new AddProductView();
+            
             AddProductViewModel addProductViewModel = new AddProductViewModel();
-
             addProductViewModel.ProductAdded += AddProductViewModel_ProductAdded;
+            
             view.DataContext = addProductViewModel;
-
             view.ShowDialog();
 
         }
@@ -72,6 +80,7 @@ namespace Client.ViewModel
         public ICommand CloseViewCommand { get; private set; }
         public ICommand SendOrderCommand { get; }
         public ICommand MakeOdrerCommand { get; }
+        public ICommand AddMessageCommand { get; }
         public ICommand OpenAddProductViewCommand{get; set;}
 
         #endregion

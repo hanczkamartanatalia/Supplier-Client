@@ -20,31 +20,34 @@ namespace Client.ViewModel
 
         }
 
+        #region buttons
         private void AcceptForms(object obj)
         {
             try
             {
                 Product_OrderLibrary.DataDB.Product product = new Product_OrderLibrary.DataDB.Product(TextBoxName, TextBoxQuantity, TextBoxPrice);
-                
+
                 ProductService service = new ProductService();
                 service.Add(product);
-                
+
                 var window = obj as Window;
                 window.Close();
                 ProductAdded?.Invoke(this, EventArgs.Empty);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
         }
+        #endregion
 
+        #region ICommand
         public ICommand AcceptFormsCommand { get; set; }
 
+        #endregion
 
-
-
+        #region TextBoxs Service
 
         private decimal _textBoxPrice;
         public decimal TextBoxPrice
@@ -78,6 +81,8 @@ namespace Client.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        #endregion
 
     }
 }

@@ -25,6 +25,8 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="1*"/>
 
@@ -66,8 +68,6 @@
         </Grid>
 
 
-
-
         <!-- btn-->
         <Button Grid.Row="6" Name="MakeOrder" FontSize="15" Content="Make order" Command="{Binding MakeOdrerCommand}"  Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
             <Button.Background>
@@ -80,26 +80,47 @@
                 <SolidColorBrush Color="#FF1A1A1E" Opacity="0"/>
             </Button.Background>
         </Button>
+        
+        <!--MESSGE-->
+        
+        <!--label-->
+        <Label Grid.Row="8" Content="Message" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFDCD7D7" />
+        <Grid Grid.Row="8">
+            <Grid.Background>
+                <SolidColorBrush Color="#FF131111" Opacity="0.5"/>
+            </Grid.Background>
+        </Grid>
 
-        <!--Exit-->
-        <Button Grid.Row="10" Name="Exit" FontSize="15" Content="Exit" Command="{Binding CloseViewCommand}" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+        <!--btn-->
+        <Button Grid.Row="9" Name="SendMessage" FontSize="15" Content="Send message" Command="{Binding AddMessageCommand}"  Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0">
             <Button.Background>
                 <SolidColorBrush Color="#FF1A1A1E" Opacity="0"/>
             </Button.Background>
         </Button>
 
-        <!--Message-->
-        <Label Grid.Column="1" Grid.Row="2" Content="Messages" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFDCD7D7"/>
+        
+
+        <!--Exit-->
+        <Button Grid.Row="12" Name="Exit" FontSize="15" Content="Exit" Command="{Binding CloseViewCommand}" Margin="2" Foreground="#FFDCD7D7" BorderThickness="0,0,0,0" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+            <Button.Background>
+                <SolidColorBrush Color="#FF1A1A1E" Opacity="0"/>
+            </Button.Background>
+        </Button>
+
+        <!--Recived Messages-->
+        <Label Grid.Column="1" Grid.Row="2" Content="Recived messages" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFDCD7D7"/>
 
         <Grid Grid.Row="2" Grid.Column="1" >
             <Grid.Background>
                 <SolidColorBrush Color="#FF131111" Opacity="0.5"/>
             </Grid.Background>
         </Grid>
+        
+        
         <!-- Messages list-->
         <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="5" Background="#FF272222"/>
         <!-- DataGrid-->
-        <DataGrid Grid.Column="2" Grid.Row="1" Grid.RowSpan="10" ItemsSource="{Binding DataItems}" AutoGenerateColumns="True"  Background="#FF272222"/>
+        <DataGrid Grid.Column="2" Grid.Row="1" Grid.RowSpan="12" ItemsSource="{Binding DataItems}" AutoGenerateColumns="True"  Background="#FF272222"/>
 
     </Grid>
 </Window>
