@@ -11,5 +11,7 @@ namespace Client.Model
         public T FindById<T>(int id);
         public void RemoveById(int id);
         public void Add<T>(T obj);
+
+        public List<T> GetAllToList<T>();
     }
 }

@@ -18,6 +18,7 @@ using System.Windows.Controls;
 using System.Security.Policy;
 using System.Reflection.Metadata;
 using System.Windows;
+using Client.Model;
 
 namespace Client.ViewModel
 {
@@ -93,11 +94,12 @@ namespace Client.ViewModel
         {
             await Task.Run(() =>
             {
-                ObservableCollection<Product_OrderLibrary.DataDB.Product> dataItems = new ObservableCollection<Product_OrderLibrary.DataDB.Product>();
+                ObservableCollection<Product> dataItems = new ObservableCollection<Product>();
 
-                ContextClient context = new ContextClient();
+                ProductService service = new ProductService();
 
-                List<Product_OrderLibrary.DataDB.Product> products = Product_OrderLibrary.Service.ContextService.Products(() => context, "Products");
+                List<Product> products = service.GetAllToList<Product>();
+                
                 foreach (var product in products)
                 {
                     dataItems.Add(product);
