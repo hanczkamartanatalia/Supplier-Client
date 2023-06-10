@@ -10,7 +10,7 @@ namespace Supplier.Model.Rabbit
 {
     internal class ConnectToSend : Connect
     {
-        private const string queueName = "SupplierSend";
+        private const string queueName = "Client";
         private const string hostNameToConnect = "localhost";
 
         public ConnectToSend() : base(hostNameToConnect, queueName){}

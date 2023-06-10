@@ -1,6 +1,4 @@
-﻿using Supplier.Commands;
-using Supplier.Data;
-using Supplier.View;
+﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Product_OrderLibrary.DataDB;
@@ -13,21 +11,27 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Unipluss.Sign.ExternalContract.Entities;
+
 using System.Windows.Controls;
 using System.Security.Policy;
 using System.Reflection.Metadata;
 using System.Windows;
-using Supplier.Model;
-using QueueRabbitMQ.MessageService;
-using Supplier.Model.Rabbit;
 
-namespace Supplier.ViewModel
+using QueueRabbitMQ.MessageService;
+
+using Supplier.Commands;
+using Supplier.Model.Rabbit;
+using Supplier.Model;
+using Supplier.View;
+using Supplier.ViewModel;
+
+namespace Client.ViewModel
 {
     internal class MainViewModel : BaseViewModel
     {
-        internal MainViewModel() 
+        internal MainViewModel()
         {
+            LoadMessagesAsync();
             LoadDataAsync();
 
             OpenAddProductViewCommand = new RelayCommand(OpenAddProductView);
@@ -49,10 +53,10 @@ namespace Supplier.ViewModel
         private void OpenAddProductView(object obj)
         {
             AddProductView view = new AddProductView();
-            
+
             AddProductViewModel addProductViewModel = new AddProductViewModel();
             addProductViewModel.ProductAdded += AddProductViewModel_ProductAdded;
-            
+
             view.DataContext = addProductViewModel;
             view.ShowDialog();
 
@@ -83,43 +87,44 @@ namespace Supplier.ViewModel
         public ICommand SendOrderCommand { get; }
         public ICommand MakeOdrerCommand { get; }
         public ICommand AddMessageCommand { get; }
-        public ICommand OpenAddProductViewCommand{get; set;}
+        public ICommand OpenAddProductViewCommand { get; set; }
 
         #endregion
 
 
         #region MessagesList
 
-        private ObservableCollection<Message> _messagesList;
-        public ObservableCollection<Message> MessagesList
+        private ObservableCollection<Message> _messageItems;
+        public ObservableCollection<Message> MessageItems
         {
-            get { return _messagesList; }
+            get { return _messageItems; }
             set
             {
-                _messagesList = value;
-                OnPropertyChanged(nameof(MessagesList));
+                _messageItems = value;
+                OnPropertyChanged(nameof(MessageItems));
             }
         }
 
         private async Task LoadMessagesAsync()
         {
-            await Task.Run(() =>
+
+            ObservableCollection<Message> messageItem = new ObservableCollection<Message>();
+
+            ConnectToReceive connectToReceive = new ConnectToReceive();
+            List<Message> MessagesLis = connectToReceive.Receive<Message>();
+
+            foreach (Message message in MessagesLis)
             {
-                ObservableCollection<Message> messageItem= new ObservableCollection<Message>();
+                messageItem.Add(message);
 
-                ConnectToReceive connectToReceive = new ConnectToReceive();
-                List<Message> MessagesLis = connectToReceive.Receive<Message>();
+            }
 
-                foreach (Message message in MessagesLis)
-                {
-                    messageItem.Add(message);
-                }
-
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    MessagesList = messageItem;
-                });
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MessageItems = messageItem;
             });
+
+
         }
 
 
@@ -145,18 +150,24 @@ namespace Supplier.ViewModel
                 ObservableCollection<Product> dataItems = new ObservableCollection<Product>();
 
                 ProductService service = new ProductService();
-
-                List<Product> products = service.GetAllToList<Product>();
-                
-                foreach (var product in products)
+                try
                 {
-                    dataItems.Add(product);
+                    List<Product> products = service.GetAllToList<Product>();
+                    foreach (var product in products)
+                    {
+                        dataItems.Add(product);
+                    }
+
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        DataItems = dataItems;
+                    });
                 }
-
-                Application.Current.Dispatcher.Invoke(() =>
+                catch(Exception ex)
                 {
-                    DataItems = dataItems;
-                });
+
+                }
+                               
             });
         }
 
@@ -165,7 +176,7 @@ namespace Supplier.ViewModel
 
         #region EventsHandler
 
-        private void AddProductViewModel_ProductAdded(object sender, EventArgs e) 
+        private void AddProductViewModel_ProductAdded(object sender, EventArgs e)
         {
             LoadDataAsync();
         }

@@ -17,8 +17,8 @@
     <Reference Include="QueueRabbitMQ">
       <HintPath>..\RabbitLib\QueueRabbitMQ.dll</HintPath>
     </Reference>
-    <Reference Include="RabbitMQ.Supplier">
-      <HintPath>..\RabbitLib\RabbitMQ.Supplier.dll</HintPath>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\RabbitLib\RabbitMQ.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
 

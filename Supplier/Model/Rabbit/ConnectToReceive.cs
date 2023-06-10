@@ -10,7 +10,7 @@ namespace Supplier.Model.Rabbit
 {
     internal class ConnectToReceive : Connect
     {
-        private const string queueName = "SupplierReceive";
+        private const string queueName = "Supplier";
         private const string hostNameToConnect = "localhost";
 
         public ConnectToReceive() : base(hostNameToConnect, queueName)
@@ -20,7 +20,7 @@ namespace Supplier.Model.Rabbit
         public List<T> Receive<T>()
         {
             ReceiveService service = new ReceiveService();
-            List<T> ts = service.ReceiveList<T>(queueName,hostNameToConnect);
+            List<T> ts = service.ReceiveList<T>(hostNameToConnect,queueName);
             return ts;
         }
 

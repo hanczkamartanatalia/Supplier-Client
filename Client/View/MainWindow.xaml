@@ -118,7 +118,7 @@
         
         
         <!-- Messages list-->
-        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="5" Background="#FF272222" ItemsSource="{Binding MessageItems}"/>
+        <DataGrid Grid.Column="1" Grid.Row="3" Grid.RowSpan="5" Background="#FF272222" ItemsSource="{Binding MessageItems}"/>
         <!-- DataGrid-->
         <DataGrid Grid.Column="2" Grid.Row="1" Grid.RowSpan="12" ItemsSource="{Binding DataItems}" AutoGenerateColumns="True"  Background="#FF272222"/>
 

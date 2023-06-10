@@ -28,6 +28,7 @@ namespace Client.ViewModel
     {
         internal MainViewModel() 
         {
+            LoadMessagesAsync();
             LoadDataAsync();
 
             OpenAddProductViewCommand = new RelayCommand(OpenAddProductView);
@@ -90,14 +91,14 @@ namespace Client.ViewModel
 
         #region MessagesList
 
-        private ObservableCollection<Message> _messagesList;
-        public ObservableCollection<Message> MessagesList
+        private ObservableCollection<Message> _messageItems;
+        public ObservableCollection<Message> MessageItems
         {
-            get { return _messagesList; }
+            get { return _messageItems; }
             set
             {
-                _messagesList = value;
-                OnPropertyChanged(nameof(MessagesList));
+                _messageItems = value;
+                OnPropertyChanged(nameof(MessageItems));
             }
         }
 
@@ -105,7 +106,7 @@ namespace Client.ViewModel
         {
             await Task.Run(() =>
             {
-                ObservableCollection<Message> messageItem= new ObservableCollection<Message>();
+                ObservableCollection<Message> messageItem = new ObservableCollection<Message>();
 
                 ConnectToReceive connectToReceive = new ConnectToReceive();
                 List<Message> MessagesLis = connectToReceive.Receive<Message>();
@@ -113,13 +114,15 @@ namespace Client.ViewModel
                 foreach (Message message in MessagesLis)
                 {
                     messageItem.Add(message);
+
                 }
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    MessagesList = messageItem;
+                    MessageItems = messageItem;
                 });
             });
+            
         }
 
 
