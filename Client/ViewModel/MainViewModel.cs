@@ -58,15 +58,32 @@ namespace Client.ViewModel
             view.ShowDialog();
 
         }
+        
+
+
 
         private void SendOrder(object obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
 
         private void MakeOdrer(object obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void CloseView(object obj)
@@ -104,25 +121,24 @@ namespace Client.ViewModel
 
         private async Task LoadMessagesAsync()
         {
-            await Task.Run(() =>
+
+            ObservableCollection<Message> messageItem = new ObservableCollection<Message>();
+
+            ConnectToReceive connectToReceive = new ConnectToReceive();
+            List<Message> MessagesLis =  connectToReceive.Receive<Message>();
+
+            foreach (Message message in MessagesLis)
             {
-                ObservableCollection<Message> messageItem = new ObservableCollection<Message>();
+                messageItem.Add(message);
 
-                ConnectToReceive connectToReceive = new ConnectToReceive();
-                List<Message> MessagesLis = connectToReceive.Receive<Message>();
+            }
 
-                foreach (Message message in MessagesLis)
-                {
-                    messageItem.Add(message);
-
-                }
-
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    MessageItems = messageItem;
-                });
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MessageItems = messageItem;
             });
-            
+
+
         }
 
 

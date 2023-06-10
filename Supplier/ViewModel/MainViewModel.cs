@@ -64,12 +64,26 @@ namespace Client.ViewModel
 
         private void SendOrder(object obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void MakeOdrer(object obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+
+            };
         }
 
         private void CloseView(object obj)
@@ -129,6 +143,7 @@ namespace Client.ViewModel
 
 
         #endregion
+
 
         #region DataGrid
 
