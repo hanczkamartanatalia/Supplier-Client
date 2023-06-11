@@ -10,7 +10,10 @@ namespace Supplier.Model
     {
         public T FindById<T>(int id);
         public void RemoveById(int id);
+
         public void Add<T>(T obj);
+
+        public T GetLast<T>();
 
         public List<T> GetAllToList<T>();
     }

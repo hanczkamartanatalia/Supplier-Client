@@ -43,6 +43,11 @@ namespace Supplier.Model
             return result;
         }
 
+        public T GetLast<T>()
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveById(int id)
         {
             throw new NotImplementedException();
