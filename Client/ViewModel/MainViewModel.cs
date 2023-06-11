@@ -164,13 +164,20 @@ namespace Client.ViewModel
                 ObservableCollection<Product> dataItems = new ObservableCollection<Product>();
 
                 ProductService service = new ProductService();
-
-                List<Product> products = service.GetAllToList<Product>();
-                
-                foreach (var product in products)
+                try
                 {
-                    dataItems.Add(product);
+                    List<Product> products = service.GetAllToList<Product>();
+
+                    foreach (var product in products)
+                    {
+                        dataItems.Add(product);
+                    }
                 }
+                catch (Exception ex)
+                {
+
+                }
+                
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
